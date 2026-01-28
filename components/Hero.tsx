@@ -1,17 +1,17 @@
 
 import React from 'react';
-import me from "./../assets/me.jpg";
 
 const Hero: React.FC = () => {
   /**
-   * We use the URL constructor instead of a static import for assets.
-   * In a browser-native ESM environment without a bundler to transform imports,
-   * standard 'import' statements are strictly for JavaScript/TypeScript files.
+   * INSTRUCTIONS FOR CUSTOM IMAGES:
+   * 1. Create a folder named 'assets' in your project root.
+   * 2. Put your photo inside (e.g., 'me.jpg').
+   * 3. Use the line below to reference it. This works perfectly in browser-native ESM.
    */
-  
+
 
   return (
-    <section id="top" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-6 md:px-16 bg-white dark:bg-neutral-950">
+    <section id="top" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-6 md:px-16 ">
       
       {/* 
         EDITORIAL HERO COMPOSITION
@@ -57,11 +57,11 @@ const Hero: React.FC = () => {
             <div className="w-[180px] h-[180px] md:w-[380px] md:h-[380px] bg-white p-1 md:p-2 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transform rotate-6 hover:rotate-2 hover:scale-105 transition-all duration-700 ease-out cursor-default">
               <div className="w-full h-full overflow-hidden rounded-full bg-neutral-100">
                 <img 
-                  src={me} 
+                  src={"https://picsum.photos/800/800?random=44"} 
                   alt="Anupam Portrait" 
                   className="w-full h-full object-cover filter contrast-[1.05]"
                   onError={(e) => {
-                    // Failover to a high-quality placeholder if the local asset is missing
+                    // Fallover to a high-quality placeholder if the local asset is missing
                     (e.target as HTMLImageElement).src = "https://picsum.photos/800/800?random=44";
                   }}
                 />

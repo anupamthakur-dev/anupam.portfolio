@@ -5,6 +5,7 @@ import Flammable from './Flammable';
 
 const Navbar: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -12,6 +13,15 @@ const Navbar: React.FC = () => {
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  useEffect(() => {
+    // Prevent scrolling when menu is open
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMenuOpen]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
@@ -26,35 +36,41 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* 
-        NAVBAR LAYOUT
-        1. Top Left: Stacked Links (High Contrast, No Line)
-        2. Top Center: Logo (Capsule, Glassmorphism)
-        3. Top Right: Theme Toggle
-      */}
+      {/* 1. TOP LEFT: Desktop Links & Mobile Menu Toggle */}
+      <nav className="fixed top-8 left-6 md:top-10 md:left-10 z-[60] flex flex-col items-start gap-2">
+        {/* Desktop Links (Hidden on mobile) */}
+        <div className="hidden md:flex flex-col gap-2">
+          {navLinks.map((link) => (
+            <Flammable key={link.name}>
+              <a href={link.href} className="block py-2 pr-4">
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white drop-shadow-md">
+                  {link.name}
+                </span>
+              </a>
+            </Flammable>
+          ))}
+        </div>
 
-      {/* 1. TOP LEFT: Navigation Links */}
-      <nav className="fixed top-10 left-10 z-50 flex flex-col items-start gap-2">
-        {navLinks.map((link) => (
-          <Flammable key={link.name}>
-            <a 
-              href={link.href}
-              className="block py-2 pr-4"
+        {/* Mobile Hamburger Button */}
+        <div className="md:hidden">
+          <Flammable>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="group flex flex-col gap-1.5 p-3 rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-md border border-neutral-200/20 dark:border-neutral-800/20"
+              aria-label="Toggle Menu"
             >
-              {/* High Contrast Text */}
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white drop-shadow-md">
-                {link.name}
-              </span>
-            </a>
+              <div className={`h-0.5 w-6 bg-neutral-900 dark:bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-6 bg-neutral-900 dark:bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45' : ''}`} />
+            </button>
           </Flammable>
-        ))}
+        </div>
       </nav>
 
-      {/* 2. TOP CENTER: Logo in Glass Capsule */}
-      <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
+      {/* 2. TOP CENTER: Logo */}
+      <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[60]">
          <Flammable>
-            <div className="glass-nav px-8 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300">
-                <a href="#top" className="text-sm font-black tracking-widest uppercase text-neutral-900 dark:text-white">
+            <div className="glass-nav px-6 md:px-8 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300">
+                <a href="#top" className="text-xs md:text-sm font-black tracking-widest uppercase text-neutral-900 dark:text-white">
                     Anupam.
                 </a>
             </div>
@@ -62,7 +78,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* 3. TOP RIGHT: Theme Toggle */}
-      <div className="fixed top-8 right-8 z-50">
+      <div className="fixed top-8 right-6 md:right-8 z-[60]">
         <Flammable>
             <button 
                 onClick={toggleTheme}
@@ -72,6 +88,42 @@ const Navbar: React.FC = () => {
                 {darkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
             </button>
         </Flammable>
+      </div>
+
+      {/* 4. FULLSCREEN MOBILE MENU */}
+      <div className={`fixed inset-0 z-50 bg-neutral-50 dark:bg-neutral-950 transition-all duration-500 ease-in-out ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+        <div className="h-full w-full flex flex-col justify-center items-center p-10">
+          <div className="flex flex-col gap-6 items-center">
+            {navLinks.map((link, idx) => (
+              <Flammable key={link.name} forcedHover={isMenuOpen}>
+                <a 
+                  href={link.href} 
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`group relative overflow-hidden transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                  style={{ transitionDelay: `${idx * 100}ms` }}
+                >
+                  <span className="text-5xl sm:text-7xl font-black uppercase tracking-tighter text-neutral-900 dark:text-white block group-hover:italic transition-all">
+                    {link.name}
+                  </span>
+                  {/* Underline effect */}
+                  <div className="absolute bottom-0 left-0 w-0 h-1 bg-neutral-900 dark:bg-white group-hover:w-full transition-all duration-300" />
+                </a>
+              </Flammable>
+            ))}
+          </div>
+
+          {/* Social Links in Menu Bottom */}
+          <div className={`mt-24 flex gap-8 transition-all duration-700 delay-300 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
+            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
+            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Behance</a>
+          </div>
+        </div>
+
+        {/* Decorative Graphic in Menu */}
+        <div className="absolute bottom-10 right-10 pointer-events-none opacity-5 dark:opacity-10">
+          <span className="text-[20vw] font-black uppercase leading-none">ANUPAM.</span>
+        </div>
       </div>
     </>
   );
