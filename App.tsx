@@ -1,0 +1,41 @@
+
+import React from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import ProjectDetail from './pages/ProjectDetail';
+import FireLayer from './components/FireLayer';
+import FlameGradient from './components/FlameGradient';
+import { FireProvider } from './context/FireContext';
+
+const App: React.FC = () => {
+  return (
+    <FireProvider>
+      <Router>
+        <div className="min-h-screen relative bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500">
+          
+          {/* 1. Global Fixed Flame Background */}
+          <FlameGradient />
+
+          {/* 2. Interactive Cursor Fire Layer (Z-40) */}
+          <FireLayer />
+          
+          <Navbar />
+          
+          {/* 3. Main Content (Z-10) 
+              We ensure this layer sits above the gradient but below the cursor fire.
+              The components inside will utilize transparency.
+          */}
+          <div className="relative z-10">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/project/:slug" element={<ProjectDetail />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </FireProvider>
+  );
+};
+
+export default App;
