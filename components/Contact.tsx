@@ -66,8 +66,8 @@ const Contact: React.FC = () => {
               {[
                 { label: 'GitHub', url: PERSONAL_INFO.github },
                 { label: 'LinkedIn', url: PERSONAL_INFO.linkedin },
+                { label: 'Resume', url: PERSONAL_INFO.resume },
                 { label: 'Twitter', url: '#' },
-                { label: 'Behance', url: '#' }
               ].map((link) => (
                 <Flammable key={link.label}>
                   <a 

@@ -8,6 +8,7 @@ export const PERSONAL_INFO = {
   email: "anupamthakur058@gmail.com",
   github: "https://github.com",
   linkedin: "https://linkedin.com",
+  resume: "https://drive.google.com/file/d/1oWHWSD4B21n72TTxQ7qHa5_05Du02z6m/view?usp=sharing",
   aboutShort: "I am a multidisciplinary developer focused on building functional and beautiful user interfaces. With over 6 years of experience, I bridge the gap between design and technology.",
   aboutLong: "Based in the digital ether, I specialize in React, TypeScript, and the modern web ecosystem. My approach is rooted in minimalist aesthetics combined with high-performance engineering. I believe that every interaction is an opportunity to delight users and solve complex problems elegantly."
 };

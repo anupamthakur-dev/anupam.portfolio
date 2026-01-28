@@ -30,9 +30,10 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About', href: '#about', external: false },
+    { name: 'Projects', href: '#projects', external: false },
+    { name: 'Contact', href: '#contact', external: false },
+    { name: 'Resume', href: PERSONAL_INFO.resume, external: true },
   ];
 
   return (
@@ -43,7 +44,12 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex flex-col gap-2">
           {navLinks.map((link) => (
             <Flammable key={link.name}>
-              <a href={link.href} className="block py-2 pr-4">
+              <a 
+                href={link.href} 
+                className="block py-2 pr-4"
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+              >
                 <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white drop-shadow-md">
                   {link.name}
                 </span>
@@ -100,6 +106,8 @@ const Navbar: React.FC = () => {
                 <a 
                   href={link.href} 
                   onClick={() => setIsMenuOpen(false)}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   className={`group relative overflow-hidden transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                   style={{ transitionDelay: `${idx * 100}ms` }}
                 >
@@ -117,7 +125,7 @@ const Navbar: React.FC = () => {
           <div className={`mt-24 flex gap-8 transition-all duration-700 delay-300 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
             <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
             <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
-            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Behance</a>
+            <a href={PERSONAL_INFO.resume} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Resume</a>
           </div>
         </div>
 
