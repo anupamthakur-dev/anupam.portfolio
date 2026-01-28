@@ -36,8 +36,8 @@ const ProjectDetail: React.FC = () => {
       <section className="container mx-auto px-6 mb-16">
         <div className="mb-12">
           <Flammable>
-            <a href="#/projects" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400 hover:text-primary transition-colors mb-8">
-                <span className="rotate-180 inline-block"><ArrowRightIcon /></span> Back to Projects
+            <a href="#/" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400 hover:text-primary transition-colors mb-8">
+                <span className="rotate-180 inline-block"><ArrowRightIcon /></span> Back to Home
             </a>
           </Flammable>
           <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">{project.category}</span>
@@ -127,7 +127,7 @@ const ProjectDetail: React.FC = () => {
         <div className="container mx-auto px-6 relative z-10">
           <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">Next Project</span>
           <Flammable>
-            <a href="#/projects" className="inline-block text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none hover:text-outline hover:text-neutral-400 transition-all text-neutral-900 dark:text-white">
+            <a href="#/" className="inline-block text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none hover:text-outline hover:text-neutral-400 transition-all text-neutral-900 dark:text-white">
                 Ready for <br /> More?
             </a>
           </Flammable>

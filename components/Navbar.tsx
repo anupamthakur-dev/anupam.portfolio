@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from './Icons';
 import Flammable from './Flammable';
+import { PERSONAL_INFO } from '../constants';
 
 const Navbar: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -66,11 +67,11 @@ const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      {/* 2. TOP CENTER: Logo */}
+      {/* 2. TOP CENTER: Logo Capsule - Mapped to TOP */}
       <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[60]">
          <Flammable>
             <div className="glass-nav px-6 md:px-8 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300">
-                <a href="#top" className="text-xs md:text-sm font-black tracking-widest uppercase text-neutral-900 dark:text-white">
+                <a href="#/" className="text-xs md:text-sm font-black tracking-widest uppercase text-neutral-900 dark:text-white">
                     Anupam.
                 </a>
             </div>
@@ -114,8 +115,8 @@ const Navbar: React.FC = () => {
 
           {/* Social Links in Menu Bottom */}
           <div className={`mt-24 flex gap-8 transition-all duration-700 delay-300 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
-            <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
+            <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
+            <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
             <a href="#" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Behance</a>
           </div>
         </div>

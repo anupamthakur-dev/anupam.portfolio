@@ -30,7 +30,7 @@ const ProjectGallery: React.FC = () => {
   const verticalOffset = (activeIndex - centerIndex) * 60; // 60px per step
 
   return (
-    <section id="projects" className="relative py-32 pt-48 overflow-visible min-h-screen">
+    <section id="projects" className="relative py-16 md:py-32 pt-48 md:pt-72 overflow-visible min-h-screen">
       
       {/* Cinematic Grain Overlay */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-overlay">
@@ -45,33 +45,47 @@ const ProjectGallery: React.FC = () => {
       <div className="relative z-10 container mx-auto px-6">
         
         {/* Header & Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-neutral-200 dark:border-neutral-800 pb-8">
-            <div>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 border-b border-neutral-200 dark:border-neutral-800 pb-8">
+            <div className="mb-8 md:mb-0">
                <span className="text-[10px] font-mono uppercase tracking-widest text-primary mb-2 block">/ Selected Cases</span>
-               <h2 className="text-[10vw] md:text-[6vw] font-black sculptural-text leading-[0.8]">
+               <h2 className="text-[12vw] md:text-[6vw] font-black sculptural-text leading-[0.8]">
                  WORKS
                </h2>
             </div>
 
-            <div className="flex flex-wrap gap-2 md:gap-0 mt-8 md:mt-0 bg-neutral-100/50 dark:bg-neutral-900/50 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 rounded-full p-1">
-              {CATEGORIES.map((cat) => (
-                <Flammable key={cat}>
-                    <button 
-                    onClick={() => setFilter(cat)}
-                    className={`
-                        relative px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300
-                        ${filter === cat 
-                        ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-lg' 
-                        : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50'
-                        }
-                    `}
-                    >
-                    {cat}
-                    </button>
-                </Flammable>
-              ))}
+            {/* Responsive Filter Bar: Horizontal Scroll on Mobile, Flex on Desktop */}
+            <div className="w-full md:w-auto overflow-hidden">
+                <div className="flex items-center w-full md:w-auto bg-neutral-100/50 dark:bg-neutral-900/50 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 rounded-full p-1 overflow-x-auto no-scrollbar">
+                {CATEGORIES.map((cat) => (
+                    <Flammable key={cat}>
+                        <button 
+                        onClick={() => setFilter(cat)}
+                        className={`
+                            relative px-4 md:px-5 py-2 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap shrink-0
+                            ${filter === cat 
+                            ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-lg' 
+                            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50'
+                            }
+                        `}
+                        >
+                        {cat}
+                        </button>
+                    </Flammable>
+                ))}
+                </div>
             </div>
         </div>
+
+        {/* Custom style to hide scrollbar while keeping functionality */}
+        <style>{`
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        `}</style>
 
         {/* Split Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 relative">
@@ -120,13 +134,13 @@ const ProjectGallery: React.FC = () => {
             </div>
 
             {/* RIGHT COLUMN: Project List */}
-            <div className="col-span-1 lg:col-span-7 flex flex-col justify-center min-h-[50vh] lg:min-h-screen py-24">
+            <div className="col-span-1 lg:col-span-7 flex flex-col justify-center min-h-[50vh] lg:min-h-screen py-12 md:py-24">
                 <div className="flex flex-col space-y-2">
                     {filteredProjects.map((project, index) => (
                         <a 
                             key={project.id}
                             href={`#/project/${project.slug}`}
-                            className="group relative py-6 border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300 block"
+                            className="group relative py-6 md:py-8 border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300 block"
                             onMouseEnter={() => {
                                 setActiveProjectId(project.id);
                                 setLastActiveProjectId(project.id);
@@ -136,15 +150,15 @@ const ProjectGallery: React.FC = () => {
                         >
                             <div className="flex items-center gap-6 md:gap-10">
                                 {/* Index */}
-                                <span className="text-xl md:text-2xl font-bold font-mono text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors">
+                                <span className="text-lg md:text-2xl font-bold font-mono text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors">
                                     {(index + 1).toString().padStart(2, '0')}
                                 </span>
                                 
                                 {/* Name */}
                                 <h3 className={`
-                                    text-3xl md:text-5xl font-black uppercase tracking-tight leading-none transition-all duration-300
+                                    text-2xl md:text-5xl font-black uppercase tracking-tight leading-none transition-all duration-300
                                     ${activeProjectId === project.id 
-                                        ? 'text-neutral-900 dark:text-white translate-x-4' 
+                                        ? 'text-neutral-900 dark:text-white translate-x-4 md:translate-x-6' 
                                         : 'text-neutral-400 dark:text-neutral-600 group-hover:text-neutral-600 dark:group-hover:text-neutral-300'
                                     }
                                 `}>
@@ -166,9 +180,9 @@ const ProjectGallery: React.FC = () => {
                     ))}
                 </div>
 
-                <div className="mt-24">
+                <div className="mt-16 md:mt-24">
                     <Flammable>
-                        <a href="#contact" className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white pb-1 hover:text-primary hover:border-primary transition-all">
+                        <a href="#contact" className="inline-flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white pb-1 hover:text-primary hover:border-primary transition-all">
                             All Projects Archive <ArrowRightIcon className="w-4 h-4" />
                         </a>
                     </Flammable>

@@ -5,7 +5,7 @@ import Flammable from './Flammable';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-white dark:bg-neutral-950">
+    <section id="about" className="relative pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-white dark:bg-neutral-950">
         
         {/* 
             Content Layer 

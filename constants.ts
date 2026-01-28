@@ -5,7 +5,7 @@ export const PERSONAL_INFO = {
   name: "Anupam Kumar",
   role: "Senior Frontend Engineer",
   tagline: "Crafting immersive digital experiences through precision code and avant-garde design.",
-  email: "hello@anupam.dev",
+  email: "anupamthakur058@gmail.com",
   github: "https://github.com",
   linkedin: "https://linkedin.com",
   aboutShort: "I am a multidisciplinary developer focused on building functional and beautiful user interfaces. With over 6 years of experience, I bridge the gap between design and technology.",

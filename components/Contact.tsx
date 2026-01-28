@@ -1,102 +1,102 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
-import { GithubIcon, LinkedinIcon, ArrowRightIcon } from './Icons';
+import { ArrowRightIcon } from './Icons';
 import Flammable from './Flammable';
 
 const Contact: React.FC = () => {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    // Changed bg-neutral-950 to transparent/glass style
-    <section id="contact" className="py-24 text-neutral-900 dark:text-white overflow-hidden relative">
+    <section id="contact" className="py-24 md:py-48 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500 overflow-hidden relative">
       
-      {/* Glass overlay for the section to ensure text readability over flame */}
-      <div className="absolute inset-0 bg-white/50 dark:bg-black/40 backdrop-blur-xl -z-10"></div>
-
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <div>
-            <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">Get In Touch</span>
-            <h2 className="text-5xl md:text-7xl font-display font-black tracking-tighter uppercase leading-none mb-10">
-              Let's build <br /> <span className="text-outline text-neutral-600 dark:text-neutral-400">Something New.</span>
-            </h2>
-            
-            <p className="text-xl text-neutral-600 dark:text-neutral-400 mb-12 max-w-md">
-              Whether you have a project in mind or just want to say hi, feel free to reach out. I'm always open to new opportunities.
-            </p>
-
-            <div className="space-y-8">
-              <Flammable>
-                <a href={`mailto:${PERSONAL_INFO.email}`} className="block group">
-                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2 block">Email</span>
-                    <span className="text-2xl md:text-3xl font-display font-bold hover:text-primary transition-colors border-b-2 border-neutral-300 dark:border-neutral-800 pb-2 group-hover:border-primary">
-                    {PERSONAL_INFO.email}
+      <div className="container mx-auto px-6 relative z-10">
+        
+        {/* Modern Bento Grid Layout - Refined */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 auto-rows-min">
+          
+          {/* Main Hero Contact Block (Now Spans 12 for full impact) */}
+          <div className="md:col-span-12 p-10 md:p-24 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] flex flex-col justify-between group overflow-hidden relative min-h-[50vh] md:min-h-[60vh]">
+             <div className="relative z-10">
+                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-primary mb-12 block">/ Contact Protocol</span>
+                <h2 className="text-7xl md:text-[12vw] font-black sculptural-text leading-[0.75] mb-8">
+                  INITIATE <br/> 
+                  <span className="text-outline-bold opacity-20 group-hover:opacity-100 transition-opacity duration-700">DIALOG</span>
+                </h2>
+             </div>
+             
+             {/* Large Interactive Email Area */}
+             <div className="relative z-10 mt-20 md:mt-32">
+                <Flammable>
+                  <button 
+                    onClick={copyEmail}
+                    className="flex flex-col items-start group/btn text-left focus:outline-none"
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-4 block group-hover/btn:text-primary transition-colors">
+                        {copied ? '✓ COPIED TO CLIPBOARD' : 'CLICK TO COPY ADDRESS'}
                     </span>
-                </a>
-              </Flammable>
+                    <span className="text-2xl md:text-7xl font-black lowercase tracking-tighter transition-all duration-500 group-hover/btn:text-primary group-hover/btn:translate-x-4">
+                      {PERSONAL_INFO.email}
+                    </span>
+                  </button>
+                </Flammable>
+             </div>
 
-              <div className="flex space-x-6">
-                <Flammable>
-                    <a href={PERSONAL_INFO.github} className="p-4 rounded-full border border-neutral-300 dark:border-neutral-800 hover:border-primary hover:text-primary transition-all bg-white/20 dark:bg-black/20">
-                    <GithubIcon className="w-6 h-6" />
-                    </a>
+             {/* Background Decoration */}
+             <div className="absolute top-0 right-0 p-12 opacity-[0.02] group-hover:opacity-[0.06] transition-opacity duration-1000 pointer-events-none">
+                <span className="text-[30vw] font-black leading-none">@</span>
+             </div>
+          </div>
+
+          {/* Social Links Matrix (Spans 12) */}
+          <div className="md:col-span-12 p-10 md:p-16 border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] bg-white/30 dark:bg-neutral-900/30 backdrop-blur-sm flex flex-col md:flex-row justify-between items-center gap-12">
+            
+            <div className="flex flex-col gap-2 text-center md:text-left">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Social Matrix</span>
+                <h4 className="text-2xl font-black uppercase">Follow the path</h4>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+              {[
+                { label: 'GitHub', url: PERSONAL_INFO.github },
+                { label: 'LinkedIn', url: PERSONAL_INFO.linkedin },
+                { label: 'Twitter', url: '#' },
+                { label: 'Behance', url: '#' }
+              ].map((link) => (
+                <Flammable key={link.label}>
+                  <a 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="px-8 py-4 bg-neutral-100 dark:bg-neutral-800 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 transition-all duration-300 flex items-center gap-3 group"
+                  >
+                    {link.label} 
+                    <ArrowRightIcon className="w-3 h-3 -rotate-45 group-hover:rotate-0 transition-transform" />
+                  </a>
                 </Flammable>
-                <Flammable>
-                    <a href={PERSONAL_INFO.linkedin} className="p-4 rounded-full border border-neutral-300 dark:border-neutral-800 hover:border-primary hover:text-primary transition-all bg-white/20 dark:bg-black/20">
-                    <LinkedinIcon className="w-6 h-6" />
-                    </a>
-                </Flammable>
-              </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block">
+               <span className="text-[10px] font-mono text-neutral-400">V.2025.REL</span>
             </div>
           </div>
 
-          <div className="bg-white/40 dark:bg-black/40 backdrop-blur-2xl p-8 md:p-12 rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl">
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 ml-1">Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="John Doe" 
-                    className="w-full bg-white/50 dark:bg-black/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-5 py-4 focus:border-primary focus:outline-none transition-colors text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 ml-1">Email</label>
-                  <input 
-                    type="email" 
-                    placeholder="john@example.com" 
-                    className="w-full bg-white/50 dark:bg-black/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-5 py-4 focus:border-primary focus:outline-none transition-colors text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 ml-1">Subject</label>
-                <select className="w-full bg-white/50 dark:bg-black/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-5 py-4 focus:border-primary focus:outline-none transition-colors appearance-none text-neutral-900 dark:text-white">
-                  <option>New Project</option>
-                  <option>Collaboration</option>
-                  <option>Job Opportunity</option>
-                  <option>Just Saying Hi</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 ml-1">Message</label>
-                <textarea 
-                  rows={5} 
-                  placeholder="Tell me about your vision..." 
-                  className="w-full bg-white/50 dark:bg-black/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-5 py-4 focus:border-primary focus:outline-none transition-colors resize-none text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
-                ></textarea>
-              </div>
-
-              <Flammable>
-                <button className="w-full py-5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 font-black uppercase tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg">
-                    Send Message <ArrowRightIcon />
-                </button>
-              </Flammable>
-            </form>
-          </div>
         </div>
+
+        {/* Massive Decorative Background Text */}
+        <div className="mt-24 md:mt-32 opacity-[0.02] dark:opacity-[0.04] pointer-events-none select-none">
+            <span className="text-[28vw] font-black uppercase leading-none whitespace-nowrap block text-center tracking-tighter">
+              GET IN TOUCH
+            </span>
+        </div>
+
       </div>
     </section>
   );
