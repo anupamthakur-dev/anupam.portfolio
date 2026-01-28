@@ -1,78 +1,129 @@
 
 import React from 'react';
+import { PERSONAL_INFO } from '../constants';
+import Flammable from './Flammable';
 
 const Hero: React.FC = () => {
-  /**
-   * INSTRUCTIONS FOR CUSTOM IMAGES:
-   * 1. Create a folder named 'assets' in your project root.
-   * 2. Put your photo inside (e.g., 'me.jpg').
-   * 3. Use the line below to reference it. This works perfectly in browser-native ESM.
-   */
-
+  // Use the direct export link for the Google Drive image
+  const heroImageUrl = `https://drive.google.com/uc?export=view&id=1PAjnP-y5SqUBbfQP0dLrzChpE9WbjUGW`;
 
   return (
-    <section id="top" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-6 md:px-16 ">
+    <section id="top" className="relative h-screen w-full overflow-hidden flex flex-col justify-end items-center  transition-colors duration-500">
       
-      {/* 
-        EDITORIAL HERO COMPOSITION
-        - Dominant Bold Typography
-        - Intentional Asymmetry
-        - Overlapping Sticker Elements
-        - Minimalist Palette
-      */}
+      {/* SVG Pencil Filter Definition for hand-drawn effects */}
+      <svg className="absolute w-0 h-0 invisible" aria-hidden="true">
+        <filter id="pencil-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="5" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
 
-      <div className="relative w-full max-w-[1600px] mx-auto flex flex-col items-start justify-center">
-        
-        {/* Playful Greeting SVG (Visual Cue) acting as an introductory label */}
-        <div className="absolute top-[-4vw] left-0 md:left-4 z-30 opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <div className="w-[80px] md:w-[140px] transform -rotate-6">
-            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full filter saturate-150 drop-shadow-sm">
-              <path d="M185 60C185 30 165 10 140 12C130 8 120 5 105 10C90 -2 70 2 55 15C40 8 15 15 8 45C0 55 0 75 15 90C8 105 25 115 45 112C55 116 75 116 90 105C100 112 120 116 145 105C160 112 180 108 188 90C200 75 192 64 185 60Z" fill="#FF453A" />
-              <g transform="translate(35, 45) rotate(-2)">
-                <text x="0" y="40" fontFamily='"Comic Sans MS", "Chalkboard SE", sans-serif' fontSize="48" fontWeight="900" fill="#1a1a1a">Hi!</text>
-              </g>
-              <g transform="translate(100, 50) rotate(2)">
-                <text x="0" y="35" fontFamily='"Comic Sans MS", "Chalkboard SE", sans-serif' fontSize="36" fontWeight="900" fill="#1a1a1a">I'm</text>
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        {/* DOMINANT TYPOGRAPHY STACK: Large-scale, modern typography with confident spacing */}
-        <div className="relative z-10 leading-[0.78] tracking-tighter select-none">
-          <h1 className="text-[18vw] md:text-[14vw] font-black text-neutral-900 dark:text-white uppercase flex flex-col">
-            <span className="block overflow-hidden">
-               <span className="block animate-slide-up" style={{ animationDelay: '0.1s' }}>ANUPAM</span>
-            </span>
-            <span className="block overflow-hidden ml-[8vw] md:ml-[12vw]">
-               <span className="block animate-slide-up" style={{ animationDelay: '0.3s' }}>KUMAR</span>
-            </span>
-          </h1>
-        </div>
-
-        {/* STICKER CUTOUT IMAGE (Intersecting Depth): Balanced asymmetry with a professional yet playful tone */}
-        <div className="absolute right-[5vw] bottom-[-2vw] md:right-[15vw] md:bottom-[-4vw] z-20 opacity-0 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <div className="relative group">
-            {/* Sticker Effect: Precise white border and intentional tilt */}
-            <div className="w-[180px] h-[180px] md:w-[380px] md:h-[380px] bg-white p-1 md:p-2 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transform rotate-6 hover:rotate-2 hover:scale-105 transition-all duration-700 ease-out cursor-default">
-              <div className="w-full h-full overflow-hidden rounded-full bg-neutral-100">
-                <img 
-                  src={"https://picsum.photos/800/800?random=44"} 
-                  alt="Anupam Portrait" 
-                  className="w-full h-full object-cover filter contrast-[1.05]"
-                  onError={(e) => {
-                    // Fallover to a high-quality placeholder if the local asset is missing
-                    (e.target as HTMLImageElement).src = "https://picsum.photos/800/800?random=44";
-                  }}
-                />
-              </div>
-              {/* Subtle surface detail for a premium physical feel */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/0 via-transparent to-white/20 pointer-events-none"></div>
-            </div>
-          </div>
-        </div>
-
+      {/* 1. BACKGROUND NAME: Single line, solid color, behind the top part of the image */}
+      <div className="absolute inset-x-0 top-[22%] md:top-[20%] flex justify-center z-0 pointer-events-none select-none">
+        <h1 className="text-[12vw] font-black leading-none text-neutral-900 dark:text-neutral-100 tracking-tighter uppercase text-center animate-slide-up whitespace-nowrap">
+          ANUPAM KUMAR
+        </h1>
       </div>
+
+      {/* 2. CENTERED IMAGE & SPEECH BUBBLE */}
+      <div className="relative z-10 w-full max-w-[95vw] md:max-w-5xl h-[70vh] md:h-[82vh] flex justify-center items-end">
+        
+        {/* Improved Sketchy Cloud Speech Bubble */}
+        <div className="absolute top-[8%] -right-2 md:right-[12%] z-30 animate-[float_5s_ease-in-out_infinite]">
+            <div className="relative p-8 md:p-12 flex items-center justify-center min-w-[140px] md:min-w-[220px]">
+                {/* Enhanced Hand-Drawn Cloud Path */}
+                <svg 
+                    viewBox="0 0 220 130" 
+                    className="absolute inset-0 w-full h-full text-white dark:text-neutral-900 drop-shadow-xl"
+                    style={{ filter: 'url(#pencil-texture)' }}
+                >
+                    <path 
+                        fill="currentColor" 
+                        stroke="currentColor" 
+                        strokeWidth="1.5"
+                        strokeLinejoin="round"
+                        d="M50,110 C30,110 10,100 10,75 C10,50 30,40 50,40 C50,20 80,10 110,10 C140,10 170,20 170,40 C190,40 210,50 210,75 C210,100 190,110 170,110 C160,125 130,125 110,120 C90,125 60,125 50,110 Z"
+                        className="text-white dark:text-neutral-800"
+                    />
+                    <path 
+                        fill="none" 
+                        stroke="black" 
+                        strokeWidth="2.5" 
+                        strokeLinecap="round"
+                        d="M50,110 C30,110 10,100 10,75 C10,50 30,40 50,40 C50,20 80,10 110,10 C140,10 170,20 170,40 C190,40 210,50 210,75 C210,100 190,110 170,110 C160,125 130,125 110,120 C90,125 60,125 50,110 Z"
+                        className="dark:stroke-neutral-100 opacity-80"
+                    />
+                </svg>
+                {/* Bubble Text */}
+                <span className="relative z-10 text-2xl md:text-5xl font-black italic tracking-tighter text-neutral-900 dark:text-neutral-50 font-serif">
+                  Hello !
+                </span>
+            </div>
+        </div>
+
+        {/* The Hero Image: Touches the exact bottom of the container */}
+        <div className="relative h-full w-auto">
+          <img 
+            src={heroImageUrl} 
+            alt="Anupam Kumar Portrait" 
+            className="h-full w-auto object-contain object-bottom drop-shadow-[0_20px_60px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_60px_rgba(255,255,255,0.03)]"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "https://picsum.photos/1000/1500?grayscale";
+            }}
+          />
+        </div>
+      </div>
+
+      {/* 3. LEFT ASIDE: Subtext & Scroll indicator */}
+      <div className="absolute bottom-12 left-8 md:left-16 z-20 flex flex-col items-start gap-12 md:gap-20">
+        <div className="max-w-[140px] md:max-w-[200px]">
+           <span className="text-[9px] font-mono uppercase tracking-[0.5em] text-primary mb-4 block">/ Discipline</span>
+           <p className="text-[10px] md:text-xs font-black leading-relaxed text-neutral-500 dark:text-neutral-400 uppercase tracking-widest editorial-justify">
+             {PERSONAL_INFO.tagline}
+           </p>
+        </div>
+
+        <div className="flex items-center gap-4 group cursor-pointer">
+            <div className="h-[50px] md:h-[80px] w-px bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-primary animate-[scrollLine_3s_ease-in-out_infinite]"></div>
+            </div>
+            <span className="text-[9px] font-black uppercase tracking-[0.6em] rotate-180 [writing-mode:vertical-lr] text-neutral-400 group-hover:text-primary transition-colors">EXPLORE</span>
+        </div>
+      </div>
+
+      {/* 4. RIGHT ASIDE: Stacked Quick Social Links */}
+      <div className="absolute right-8 md:right-16 bottom-16 z-20 flex flex-col items-center">
+        <div className="flex flex-col items-center gap-10 md:gap-12 mb-10">
+            {[
+              { label: 'GITHUB', url: PERSONAL_INFO.github },
+              { label: 'LINKEDIN', url: PERSONAL_INFO.linkedin },
+              { label: 'RESUME', url: PERSONAL_INFO.resume }
+            ].map((link) => (
+              <Flammable key={link.label}>
+                <a 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-all duration-300 [writing-mode:vertical-rl] py-2 hover:-translate-y-1"
+                >
+                  {link.label}
+                </a>
+              </Flammable>
+            ))}
+        </div>
+        <div className="w-px h-16 md:h-24 bg-neutral-100 dark:bg-neutral-800"></div>
+      </div>
+
+      <style>{`
+        @keyframes scrollLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(-1deg); }
+          50% { transform: translateY(-20px) rotate(1deg); }
+        }
+      `}</style>
 
     </section>
   );
