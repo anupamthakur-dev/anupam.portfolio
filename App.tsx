@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router';
+import { BrowserRouter, Routes, Route,  } from 'react-router';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
@@ -12,7 +12,7 @@ const App: React.FC = () => {
   console.log(window.location.hash)
   return (
     <FireProvider>
-      <Router>
+      <BrowserRouter>
         <div className="h-[100dvh] md:min-h-screen relative bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500">
           
           {/* 1. Global Fixed Flame Background */}
@@ -34,7 +34,7 @@ const App: React.FC = () => {
             </Routes>
           </div>
         </div>
-      </Router>
+      </BrowserRouter>
     </FireProvider>
   );
 };

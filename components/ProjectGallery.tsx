@@ -5,6 +5,8 @@ import CATEGORY from "../db/category.json" with { type: "json" };
 
 import Flammable from "./Flammable";
 import type { CATEGORIES, Projects } from "@/types";
+import { NavLink } from "react-router";
+
 
 const ProjectGallery: React.FC = () => {
   const categories = CATEGORY as CATEGORIES;
@@ -41,6 +43,7 @@ const ProjectGallery: React.FC = () => {
       id="projects"
       className="relative py-16 md:py-32 pt-48 md:pt-72 overflow-visible min-h-screen"
     >
+      
       {/* Cinematic Grain Overlay */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-overlay">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -126,18 +129,15 @@ const ProjectGallery: React.FC = () => {
                       forcedHover={isImageVisible}
                       key={displayProject.id}
                     >
-                      <a
-                        href={`#/project/${displayProject.slug}`}
+                      <NavLink
+                        to={`project/${displayProject.slug}`}
                         className="block w-full h-full relative group cursor-none"
                       >
                         <img
                           src={displayProject.hero_image_link}
                           alt={displayProject.title}
                           className="w-full h-full object-cover"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src =
-                              "https://picsum.photos/1000/1500?grayscale";
-                          }}
+                          
                         />
                         <div className="absolute inset-0 bg-black/10"></div>
 
@@ -150,7 +150,7 @@ const ProjectGallery: React.FC = () => {
                             {displayProject.title}
                           </h3>
                         </div>
-                      </a>
+                      </NavLink>
                     </Flammable>
                   )}
                 </div>
@@ -162,9 +162,9 @@ const ProjectGallery: React.FC = () => {
           <div className="col-span-1  lg:col-span-7  flex flex-col justify-center min-h-[40vh] lg:min-h-screen py-7 md:py-14  ">
             <div className="flex flex-col space-y-2">
               {filteredProjects.map((project, index) => (
-                <a
+                <NavLink
                   key={project.id}
-                  href={`#/project/${project.slug}`}
+                  to={`project/${project.slug}`}
                   className="group relative py-6 md:py-8 border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300 block"
                   onMouseEnter={() => {
                     setActiveProjectId(project.id);
@@ -210,7 +210,7 @@ const ProjectGallery: React.FC = () => {
                                 ${activeProjectId === project.id ? "w-full opacity-100" : "w-full opacity-100 lg:w-0 lg:opacity-0"}
                             `}
                   ></div>
-                </a>
+                </NavLink>
               ))}
             </div>
 
