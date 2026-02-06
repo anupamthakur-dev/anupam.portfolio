@@ -1,69 +1,123 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import PROJECTS from "../db/projects.json" with { type: "json" };
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { PROJECTS } from '../constants';
-import { Project } from '../types';
-import { ArrowRightIcon } from '../components/Icons';
-import Flammable from '../components/Flammable';
+import { ArrowInBoxIcon, ArrowRightIcon, GithubIcon } from "../components/Icons";
+import Flammable from "../components/Flammable";
+import type { Project, Projects } from "@/types";
 
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<Project | null>(null);
+  const projects = PROJECTS as Projects;
 
   useEffect(() => {
-    const found = PROJECTS.find(p => p.slug === slug);
+    const found = projects.find((p) => p.slug === slug);
     if (found) {
       setProject(found);
       window.scrollTo(0, 0);
     }
   }, [slug]);
 
-  if (!project) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-        <a href="#/" className="text-primary hover:underline">Return Home</a>
+  if (!project)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
+          <a href="#/" className="text-primary hover:underline">
+            Return Home
+          </a>
+        </div>
       </div>
-    </div>
-  );
+    );
 
   return (
     <main className="pt-24 relative">
-       {/* Background for readability */}
-       <div className="fixed inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-3xl -z-10 pointer-events-none"></div>
+      {/* Background for readability */}
+      <div className="fixed inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-3xl -z-10 pointer-events-none"></div>
 
       {/* Hero Header */}
       <section className="container mx-auto px-6 mb-16">
         <div className="mb-12">
           <Flammable>
-            <a href="#/" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400 hover:text-primary transition-colors mb-8">
-                <span className="rotate-180 inline-block"><ArrowRightIcon /></span> Back to Home
+            <a
+              href="#/"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400 hover:text-primary transition-colors mb-8"
+            >
+              <span className="rotate-180 inline-block">
+                <ArrowRightIcon />
+              </span>{" "}
+              Back to Home
             </a>
           </Flammable>
-          <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">{project.category}</span>
+          <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">
+            {project.category}
+          </span>
           <h1 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none">
             {project.title}
           </h1>
         </div>
 
+        <div className="w-full py-2 flex items-center justify-end gap-4 ">
+          {project.live_url && (
+            <Flammable>
+              <a
+                href={project.live_url}
+                target="_blank"
+                className="flex items-center gap-2 bg-neutral-200 dark:bg-neutral-900 text-primary py-2 px-4 rounded-lg shadow-lg"
+              >
+                <ArrowInBoxIcon/> <span>Live</span>
+              </a>
+            </Flammable>
+          )}
+          {
+            project.source_code_url && <Flammable>
+            <a
+              href={project.source_code_url}
+              target="_blank"
+              className="flex items-center gap-2 bg-neutral-200 dark:bg-neutral-900 text-primary py-2 px-4 rounded-lg shadow-lg"
+            >
+              <GithubIcon className="w-5 h-5" /> <span>Source code</span>
+            </a>
+          </Flammable>
+          }
+          
+          
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10 border-y border-neutral-200 dark:border-neutral-800 bg-white/20 dark:bg-black/20 backdrop-blur-sm rounded-xl px-4">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">Client</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">
+              Client
+            </span>
             <span className="font-bold">{project.client}</span>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">Role</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">
+              Role
+            </span>
             <span className="font-bold">{project.role}</span>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">Year</span>
-            <span className="font-bold">{project.year}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">
+              Year
+            </span>
+            <span className="font-bold">
+              {project.date_started} - {project.date_completed}
+            </span>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">Tech Stack</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block mb-1">
+              Tech Stack
+            </span>
             <div className="flex flex-wrap gap-1">
-              {project.tags.map(tag => (
-                <span key={tag} className="text-xs font-bold bg-white/50 dark:bg-black/50 px-2 py-0.5 rounded uppercase">{tag}</span>
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-xs font-bold bg-white/50 dark:bg-black/50 px-2 py-0.5 rounded uppercase"
+                >
+                  {tech}
+                </span>
               ))}
             </div>
           </div>
@@ -73,9 +127,9 @@ const ProjectDetail: React.FC = () => {
       {/* Featured Image */}
       <section className="px-6 mb-24">
         <div className="rounded-3xl overflow-hidden aspect-video shadow-2xl">
-          <img 
-            src={project.heroImage} 
-            alt={project.title} 
+          <img
+            src={project.hero_image_link}
+            alt={project.title}
             className="w-full h-full object-cover"
           />
         </div>
@@ -85,7 +139,9 @@ const ProjectDetail: React.FC = () => {
       <section className="container mx-auto px-6 mb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">The Challenge</h3>
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+              The Challenge
+            </h3>
           </div>
           <div className="md:col-span-2">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -94,7 +150,9 @@ const ProjectDetail: React.FC = () => {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">The Solution</h3>
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+              The Solution
+            </h3>
           </div>
           <div className="md:col-span-2">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -103,7 +161,9 @@ const ProjectDetail: React.FC = () => {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">The Outcome</h3>
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+              The Outcome
+            </h3>
           </div>
           <div className="md:col-span-2">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -114,23 +174,35 @@ const ProjectDetail: React.FC = () => {
       </section>
 
       {/* Gallery/Additional Visuals */}
-      <section className="py-24 bg-white/30 dark:bg-black/30 backdrop-blur-md">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <img src={`https://picsum.photos/800/600?random=${project.id}1`} alt="Detail 1" className="rounded-2xl shadow-lg" />
-          <img src={`https://picsum.photos/800/600?random=${project.id}2`} alt="Detail 2" className="rounded-2xl shadow-lg" />
-        </div>
-      </section>
+      {project.gallery_links && project.gallery_links.length > 0 && (
+        <section className="py-24 bg-white/30 dark:bg-black/30 backdrop-blur-md">
+          <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {project.gallery_links.map((link) => (
+              <img
+                key={link}
+                src={link}
+                alt="Detail 1"
+                className="rounded-2xl shadow-lg"
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Next Project CTA */}
       <section className="py-32 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent dark:from-black/80 dark:via-transparent dark:to-transparent pointer-events-none"></div>
         <div className="container mx-auto px-6 relative z-10">
-          <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">Next Project</span>
-          <Flammable>
-            <a href="#/" className="inline-block text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none hover:text-outline hover:text-neutral-400 transition-all text-neutral-900 dark:text-white">
-                Ready for <br /> More?
-            </a>
-          </Flammable>
+          <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">
+            Next Project
+          </span>
+
+          <a
+            href="#/"
+            className="inline-block text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none hover:text-outline hover:text-neutral-400 transition-all text-neutral-900 dark:text-white"
+          >
+            Ready for <br /> More?
+          </a>
         </div>
       </section>
     </main>

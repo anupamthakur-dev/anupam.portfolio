@@ -4,10 +4,12 @@ import Hero from '../components/Hero';
 import ProjectGallery from '../components/ProjectGallery';
 import About from '../components/About';
 import Contact from '../components/Contact';
-import Blog from '../components/Blog';
+import Blog from '../components/Experience';
 import MarqueeBreaker from '../components/MarqueeBreaker';
+import { useLocation } from 'react-router';
 
 const Home: React.FC = () => {
+  const location = useLocation()
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1
@@ -30,8 +32,16 @@ const Home: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const targetId = location.state?.targetId;
+    if (!targetId) return;
+
+    const el = document.getElementById(targetId);
+    el?.scrollIntoView({ behavior: "smooth" });
+  }, [])
+
   return (
-    <main>
+    <main id='top'>
       <Hero />
       <About />
       <MarqueeBreaker />

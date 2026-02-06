@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
@@ -9,10 +9,11 @@ import FlameGradient from './components/FlameGradient';
 import { FireProvider } from './context/FireContext';
 
 const App: React.FC = () => {
+  console.log(window.location.hash)
   return (
     <FireProvider>
       <Router>
-        <div className="min-h-screen relative bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500">
+        <div className="h-[100dvh] md:min-h-screen relative bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500">
           
           {/* 1. Global Fixed Flame Background */}
           <FlameGradient />

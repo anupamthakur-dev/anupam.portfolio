@@ -14,7 +14,7 @@ const FlameGradient: React.FC = () => {
         
         {/* Layer 1: Outer Swirl (Slow, Wide Arms) */}
         <div 
-          className="absolute w-[200vmax] h-[200vmax] animate-[spin_60s_linear_infinite] opacity-40 dark:opacity-50 mix-blend-normal dark:mix-blend-screen blur-[80px] md:blur-[100px]"
+          className="absolute w-[130vmax] h-[130vmax] animate-[spin_60s_linear_infinite] opacity-40 dark:opacity-50 mix-blend-normal dark:mix-blend-screen blur-[60px] md:blur-[80px]"
           style={{
             background: `conic-gradient(
               from 0deg at 50% 50%,
@@ -31,7 +31,7 @@ const FlameGradient: React.FC = () => {
 
         {/* Layer 2: Inner Vortex (Fast, Tight Arms, Reverse Spin) */}
         <div 
-          className="absolute w-[120vmax] h-[120vmax] animate-[spin_20s_linear_infinite_reverse] opacity-50 dark:opacity-70 mix-blend-normal dark:mix-blend-screen blur-[50px] md:blur-[70px]"
+          className="absolute w-[90vmax] h-[90vmax] animate-[spin_20s_linear_infinite_reverse] opacity-50 dark:opacity-70 mix-blend-normal dark:mix-blend-screen blur-[40px] md:blur-[60px]"
           style={{
             background: `conic-gradient(
               from 120deg at 50% 50%,
@@ -50,7 +50,7 @@ const FlameGradient: React.FC = () => {
 
         {/* Layer 3: The Eye (Pulsing Center) */}
         <div 
-           className="absolute w-[60vmax] h-[60vmax] animate-pulse opacity-60 dark:opacity-90 mix-blend-normal dark:mix-blend-screen blur-[60px]"
+           className="absolute w-[40vmax] h-[40vmax] animate-pulse opacity-60 dark:opacity-90 mix-blend-normal dark:mix-blend-screen blur-[50px]"
            style={{
              background: `radial-gradient(
                circle at center,

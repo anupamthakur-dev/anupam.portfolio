@@ -1,14 +1,17 @@
 
 import React, { useState } from 'react';
-import { PERSONAL_INFO } from '../constants';
+import PROFILE from'../db/profile.json' with {type : 'json'};
 import { ArrowRightIcon } from './Icons';
 import Flammable from './Flammable';
+import type { PortfolioData } from '@/types';
 
 const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
+  const profile = PROFILE as PortfolioData
+
   const copyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    navigator.clipboard.writeText(profile.personal_info.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -22,7 +25,7 @@ const Contact: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 auto-rows-min">
           
           {/* Main Hero Contact Block (Now Spans 12 for full impact) */}
-          <div className="md:col-span-12 p-10 md:p-24 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] flex flex-col justify-between group overflow-hidden relative min-h-[50vh] md:min-h-[60vh]">
+          <div className="md:col-span-12 p-10 md:p-24 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-[2.5rem] flex flex-col justify-between group overflow-hidden relative min-h-[50vh] md:min-h-[60vh]">
              <div className="relative z-10">
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-primary mb-12 block">/ Contact Protocol</span>
                 <h2 className="text-7xl md:text-[12vw] font-black sculptural-text leading-[0.75] mb-8">
@@ -33,19 +36,19 @@ const Contact: React.FC = () => {
              
              {/* Large Interactive Email Area */}
              <div className="relative z-10 mt-20 md:mt-32">
-                <Flammable>
+                
                   <button 
                     onClick={copyEmail}
                     className="flex flex-col items-start group/btn text-left focus:outline-none"
                   >
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-4 block group-hover/btn:text-primary transition-colors">
+                    <span className={`text-[10px] font-bold uppercase tracking-widest  mb-4 block  transition-colors ${copied?"text-green-400":"text-neutral-400"}`}>
                         {copied ? '✓ COPIED TO CLIPBOARD' : 'CLICK TO COPY ADDRESS'}
                     </span>
                     <span className="text-2xl md:text-7xl font-black lowercase tracking-tighter transition-all duration-500 group-hover/btn:text-primary group-hover/btn:translate-x-4">
-                      {PERSONAL_INFO.email}
+                      {profile.personal_info.email}
                     </span>
                   </button>
-                </Flammable>
+                
              </div>
 
              {/* Background Decoration */}
@@ -55,7 +58,7 @@ const Contact: React.FC = () => {
           </div>
 
           {/* Social Links Matrix (Spans 12) */}
-          <div className="md:col-span-12 p-10 md:p-16 border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] bg-white/30 dark:bg-neutral-900/30 backdrop-blur-sm flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="md:col-span-12 p-10 md:p-16 border border-neutral-300 dark:border-neutral-800 rounded-[2.5rem] bg-white/30 dark:bg-neutral-900/30 backdrop-blur-sm flex flex-col md:flex-row justify-between items-center gap-12">
             
             <div className="flex flex-col gap-2 text-center md:text-left">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Social Matrix</span>
@@ -64,10 +67,9 @@ const Contact: React.FC = () => {
 
             <div className="flex flex-wrap justify-center gap-4 md:gap-8">
               {[
-                { label: 'GitHub', url: PERSONAL_INFO.github },
-                { label: 'LinkedIn', url: PERSONAL_INFO.linkedin },
-                { label: 'Resume', url: PERSONAL_INFO.resume },
-                { label: 'Twitter', url: '#' },
+                { label: 'GitHub', url: profile.personal_info.github },
+                { label: 'LinkedIn', url: profile.personal_info.linkedin },
+                { label: 'Resume', url: profile.personal_info.resume_link }
               ].map((link) => (
                 <Flammable key={link.label}>
                   <a 
@@ -91,7 +93,7 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Massive Decorative Background Text */}
-        <div className="mt-24 md:mt-32 opacity-[0.02] dark:opacity-[0.04] pointer-events-none select-none">
+        <div className="mt-24 md:mt-32 opacity-[0.05] dark:opacity-[0.04] pointer-events-none select-none">
             <span className="text-[28vw] font-black uppercase leading-none whitespace-nowrap block text-center tracking-tighter">
               GET IN TOUCH
             </span>

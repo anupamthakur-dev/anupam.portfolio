@@ -1,9 +1,12 @@
 
 import React from 'react';
-import { PERSONAL_INFO } from '../constants';
+import PROFILE from '../db/profile.json' with {type:'json'} ;
 import Flammable from './Flammable';
+import me_secondary from '@/assets/me_secondary.jpg';
+import type { AboutSection} from '@/types';
 
 const About: React.FC = () => {
+    const about = PROFILE.about as AboutSection;
   return (
     <section id="about" className="relative pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-white dark:bg-neutral-950">
         
@@ -23,7 +26,7 @@ const About: React.FC = () => {
                 <div className="md:col-span-5 relative group">
                      <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 dark:bg-neutral-900 z-10">
                         <img 
-                            src="https://picsum.photos/800/1000?random=101" 
+                            src={me_secondary} 
                             alt="Portrait" 
                             className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-105"
                         />
@@ -55,12 +58,12 @@ const About: React.FC = () => {
 
                     <div className="space-y-12 max-w-2xl">
                         <p className="text-2xl md:text-3xl font-light leading-snug text-neutral-800 dark:text-neutral-200">
-                            {PERSONAL_INFO.aboutShort}
+                            {about.about_short}
                         </p>
 
                         <div className="flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-start md:items-end">
                             <p className="text-sm md:text-base text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-md editorial-justify">
-                                {PERSONAL_INFO.aboutLong}
+                                {about.about_long}
                             </p>
 
                             <Flammable>

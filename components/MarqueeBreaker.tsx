@@ -1,9 +1,13 @@
 
+import { MarqueeStripString } from '@/utils/marquee';
 import React from 'react';
+import PROFILE from "../db/profile.json" with {type:'json'};
+import type { Skills } from '@/types';
 
-const MARQUEE_ONE = "CREATIVE DEVELOPMENT → UI/UX DESIGN → MOTION GRAPHICS → FRONTEND ARCHITECTURE → ";
-const MARQUEE_TWO = "REACT → TYPESCRIPT → NODE.JS → TAILWIND → THREE.JS → NEXT.JS → ";
 
+const SKILLS = PROFILE.skills as Skills; 
+ const MARQUEE_ONE = MarqueeStripString([...SKILLS.backend,...SKILLS.frontend,...SKILLS.tools],"leftArrow");
+ const MARQUEE_TWO = MarqueeStripString([...SKILLS.backend,...SKILLS.frontend,...SKILLS.tools],"rightArrow");
 const MarqueeBreaker: React.FC = () => {
   return (
     <div className="relative w-full h-0 z-30 select-none">

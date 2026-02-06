@@ -112,13 +112,20 @@ const FireLayer: React.FC = () => {
   const wind = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+
+    const isDesktop =
+    window.matchMedia('(hover: hover)').matches &&
+    window.matchMedia('(pointer: fine)').matches;
+
+    if (!isDesktop) return; 
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     // Particle Pool
-    const MAX_PARTICLES = 1500;
+    const MAX_PARTICLES = 1000;
     const particles: Particle[] = [];
     for (let i = 0; i < MAX_PARTICLES; i++) {
       particles.push(new Particle());
@@ -268,6 +275,7 @@ const FireLayer: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
+       data-fire-layer
       className="fixed inset-0 pointer-events-none z-[40]"
     />
   );

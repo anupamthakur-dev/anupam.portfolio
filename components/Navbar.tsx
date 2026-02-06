@@ -2,11 +2,28 @@
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from './Icons';
 import Flammable from './Flammable';
-import { PERSONAL_INFO } from '../constants';
+
+import Profile from '../db/profile.json' with {type:'json'};
+import { useLocation, useNavigate } from 'react-router';
+
+import { DesktopInPageNav, MobileInPageNav } from './InpageNav';
+
 
 const Navbar: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleInpageNav = (id: string) => {
+    if (location.pathname !== "/") {
+      navigate("/", { replace: false });
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 50);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 
   useEffect(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -30,38 +47,20 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'About', href: '#about', external: false },
-    { name: 'Projects', href: '#projects', external: false },
-    { name: 'Contact', href: '#contact', external: false },
-    { name: 'Resume', href: PERSONAL_INFO.resume, external: true },
+    { name: 'About', href: 'about', external: false },
+    { name: 'Projects', href: 'projects', external: false },
+    { name: 'Contact', href: 'contact', external: false },
+    { name: 'Resume', href: Profile.personal_info.resume_link, external: true },
   ];
 
   return (
     <>
       {/* 1. TOP LEFT: Desktop Links & Mobile Menu Toggle */}
-      <nav className="fixed top-8 left-6 md:top-10 md:left-10 z-[60] flex flex-col items-start gap-2">
-        {/* Desktop Links (Hidden on mobile) */}
-        <div className="hidden md:flex flex-col gap-2">
-          {navLinks.map((link) => (
-            <Flammable key={link.name}>
-              <a 
-                href={link.href} 
-                className="block py-2 pr-4"
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white drop-shadow-md">
-                  {link.name}
-                </span>
-              </a>
-            </Flammable>
-          ))}
-        </div>
-
+      <nav className="fixed top-8 left-6 md:top-10 md:left-10 z-[60] flex flex-col items-start gap-2  ">
         {/* Mobile Hamburger Button */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <Flammable>
-            <button 
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="group flex flex-col gap-1.5 p-3 rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-md border border-neutral-200/20 dark:border-neutral-800/20"
               aria-label="Toggle Menu"
@@ -74,26 +73,39 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* 2. TOP CENTER: Logo Capsule - Mapped to TOP */}
-      <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[60]">
-         <Flammable>
-            <div className="glass-nav px-6 md:px-8 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300">
-                <a href="#/" className="text-xs md:text-sm font-black tracking-widest uppercase text-neutral-900 dark:text-white">
-                    Anupam.
-                </a>
-            </div>
-        </Flammable>
+      <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[50] flex gap-4">
+        <DesktopInPageNav id={'top'} lable={"Anupam."}  />
+        <div className='hidden lg:flex  gap-4 items-center'>
+        {navLinks.map((link) => (  link.external ?
+            <Flammable key={link.name}>
+            <a
+                href={link.href}
+                className="block  w-fit"
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                >
+               <div className="glass-nav px-6 md:px-8 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300">
+
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white drop-shadow-md ">
+                  {link.name}
+                </span>
+</div>
+              </a> 
+            </Flammable> : <DesktopInPageNav id={link.href} lable={link.name} key={link.name} />
+          ))}
+          </div>
       </div>
 
       {/* 3. TOP RIGHT: Theme Toggle */}
-      <div className="fixed top-8 right-6 md:right-8 z-[60]">
+      <div className="fixed top-8 right-6 md:right-8 z-[50]">
         <Flammable>
-            <button 
-                onClick={toggleTheme}
-                className="p-3 bg-white/10 dark:bg-black/10 backdrop-blur-md border border-neutral-200/20 dark:border-neutral-800/20 rounded-full hover:scale-110 transition-transform shadow-lg text-neutral-900 dark:text-white"
-                aria-label="Toggle Theme"
-            >
-                {darkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
-            </button>
+          <button
+            onClick={toggleTheme}
+            className="p-3 bg-white/10 dark:bg-black/10 backdrop-blur-md border border-neutral-200/20 dark:border-neutral-800/20 rounded-full hover:scale-110 transition-transform shadow-lg text-neutral-900 dark:text-white"
+            aria-label="Toggle Theme"
+          >
+            {darkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+          </button>
         </Flammable>
       </div>
 
@@ -101,10 +113,10 @@ const Navbar: React.FC = () => {
       <div className={`fixed inset-0 z-50 bg-neutral-50 dark:bg-neutral-950 transition-all duration-500 ease-in-out ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="h-full w-full flex flex-col justify-center items-center p-10">
           <div className="flex flex-col gap-6 items-center">
-            {navLinks.map((link, idx) => (
+            {navLinks.map((link, idx) => (  link.external ?
               <Flammable key={link.name} forcedHover={isMenuOpen}>
-                <a 
-                  href={link.href} 
+                <a
+                  href={link.href}
                   onClick={() => setIsMenuOpen(false)}
                   target={link.external ? "_blank" : undefined}
                   rel={link.external ? "noopener noreferrer" : undefined}
@@ -117,15 +129,15 @@ const Navbar: React.FC = () => {
                   {/* Underline effect */}
                   <div className="absolute bottom-0 left-0 w-0 h-1 bg-neutral-900 dark:bg-white group-hover:w-full transition-all duration-300" />
                 </a>
-              </Flammable>
+              </Flammable>:<MobileInPageNav lable={link.name} id={link.href} closeMenu={()=>setIsMenuOpen(false)} key={idx} index={idx} isMenuOpen={isMenuOpen}/>
             ))}
           </div>
 
           {/* Social Links in Menu Bottom */}
           <div className={`mt-24 flex gap-8 transition-all duration-700 delay-300 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-            <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
-            <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
-            <a href={PERSONAL_INFO.resume} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Resume</a>
+            <a href={Profile.personal_info.github} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">GitHub</a>
+            <a href={Profile.personal_info.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">LinkedIn</a>
+            <a href={Profile.personal_info.resume_link} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Resume</a>
           </div>
         </div>
 
