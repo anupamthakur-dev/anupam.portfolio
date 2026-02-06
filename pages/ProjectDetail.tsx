@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { NavLink, useParams } from "react-router";
 import PROJECTS from "../db/projects.json" with { type: "json" };
 
 import { ArrowInBoxIcon, ArrowRightIcon, GithubIcon } from "../components/Icons";
 import Flammable from "../components/Flammable";
 import type { Project, Projects } from "@/types";
+import { nextProject } from "@/utils/nextProject";
 
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,9 +25,9 @@ const ProjectDetail: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-          <a href="#/" className="text-primary hover:underline">
+          <NavLink to="/" className="text-primary hover:underline">
             Return Home
-          </a>
+          </NavLink>
         </div>
       </div>
     );
@@ -136,36 +137,40 @@ const ProjectDetail: React.FC = () => {
       </section>
 
       {/* Content Sections */}
+      <section className="container mx-auto px-6 mb-24"> 
+         <p>{project.short_description}</p>
+         <p>{project.description}</p>
+      </section>
       <section className="container mx-auto px-6 mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight border-l-4 border-primary pl-4">
               The Challenge
             </h3>
           </div>
-          <div className="md:col-span-2">
+          <div className= " mb-8 md:col-span-2 ">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
               {project.challenge}
             </p>
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight border-l-4 border-primary pl-4">
               The Solution
             </h3>
           </div>
-          <div className="md:col-span-2">
+          <div className=" mb-8 md:col-span-2">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
               {project.solution}
             </p>
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-black uppercase tracking-tight mb-4 border-l-4 border-primary pl-4">
+            <h3 className="text-2xl font-display font-black uppercase tracking-tight border-l-4 border-primary pl-4">
               The Outcome
             </h3>
           </div>
-          <div className="md:col-span-2">
+          <div className="mb-8  md:col-span-2">
             <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
               {project.outcome}
             </p>
@@ -197,12 +202,12 @@ const ProjectDetail: React.FC = () => {
             Next Project
           </span>
 
-          <a
-            href="#/"
+          <NavLink
+            to={nextProject(projects,slug)}
             className="inline-block text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-none hover:text-outline hover:text-neutral-400 transition-all text-neutral-900 dark:text-white"
           >
             Ready for <br /> More?
-          </a>
+          </NavLink>
         </div>
       </section>
     </main>
