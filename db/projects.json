@@ -16,6 +16,7 @@
     "slug": "pomyo-pomodoro-timer",
     "solution": "Implemented precise timer logic with React hooks and state management, along with an intuitive UI for easy customization.",
     "source_code_url": "https://github.com/anupamthakur-dev/pomyo",
+    "live_url": "https://pomyo.vercel.app/",
     "tags": [
       "Productivity",
       "Timer",

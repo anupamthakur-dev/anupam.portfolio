@@ -47,7 +47,7 @@ const MarqueeBreaker: React.FC = () => {
                 {/* 
                     Strap 1: Bottom Layer, Negative Rotation 
                 */}
-                <div className="absolute w-[200vw] bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-white py-10 md:py-16 shadow-xl transform -rotate-[6deg] md:-rotate-[5deg] border-y border-neutral-300 dark:border-neutral-700 will-change-transform">
+                <div className="absolute w-[200vw] bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-white py-10 md:py-16 shadow-xl transform translate-y-12 lg:translate-y-6 -rotate-[6deg] lg:-rotate-[4deg] border-y border-neutral-300 dark:border-neutral-700 will-change-transform">
                     <div className="flex w-fit animate-marquee-reverse opacity-70">
                         <span className="whitespace-nowrap text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-[0.2em] px-4">
                             {MARQUEE_TWO.repeat(8)}
