@@ -6,6 +6,7 @@ import { ArrowInBoxIcon, ArrowRightIcon, GithubIcon } from "../components/Icons"
 import Flammable from "../components/Flammable";
 import type { Project, Projects } from "@/types";
 import { nextProject } from "@/utils/nextProject";
+import NotFound from "@/components/NotFound";
 
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -20,17 +21,8 @@ const ProjectDetail: React.FC = () => {
     }
   }, [slug]);
 
-  if (!project)
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-          <NavLink to="/" className="text-primary hover:underline">
-            Return Home
-          </NavLink>
-        </div>
-      </div>
-    );
+  if (!project) return <NotFound/>
+    
 
   return (
     <main className="pt-24 relative">

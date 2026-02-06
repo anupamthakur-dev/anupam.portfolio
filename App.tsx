@@ -7,6 +7,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import FireLayer from './components/FireLayer';
 import FlameGradient from './components/FlameGradient';
 import { FireProvider } from './context/FireContext';
+import NotFound from './components/NotFound';
 
 const App: React.FC = () => {
   console.log(window.location.hash)
@@ -31,6 +32,8 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/project/:slug" element={<ProjectDetail />} />
+              <Route path="*" element={<NotFound />} />
+
             </Routes>
           </div>
         </div>
